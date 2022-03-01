@@ -16,7 +16,7 @@
     * Создаем Pipe и вызываем execute.
     * Если ReturnCode::EXIT, то завершаем работу интерпретатора.
 ## Pipe
-Класс, отвечающий за пайп комманд
+Класс, отвечающий за пайп команд
 ```kotlin
 class Pipe(val commands: List<Command>) {
     execute(input: Stream, out: Stream, error: Stream, environment: Environment): ReturnCode {}
