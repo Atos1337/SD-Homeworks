@@ -56,7 +56,7 @@ class AssignmentCommandTest {
 
     @Test
     fun errorAssignmentTest() {
-        val expected = listOf("", "Wrong number of arguments")
+        val expected = listOf("", "Wrong number of arguments${System.lineSeparator()}")
         val tested = calculate(listOf("a"))
         Assertions.assertEquals(expected, tested)
     }

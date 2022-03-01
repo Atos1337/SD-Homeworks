@@ -47,14 +47,14 @@ class CatCommandTest {
 
     @Test
     fun oneFileErrorTest() {
-        val expected = listOf("", "bwrg: No such file or directory")
+        val expected = listOf("", "bwrg: No such file or directory${System.lineSeparator()}")
         val tested = calculate(listOf("bwrg"))
         Assertions.assertEquals(expected, tested)
     }
 
     @Test
     fun multipleFilesErrorTest() {
-        val expected = listOf(File("src/test/resources/forest-gump.txt").readText(Charsets.UTF_8), "bwrg: No such file or directory")
+        val expected = listOf(File("src/test/resources/forest-gump.txt").readText(Charsets.UTF_8), "bwrg: No such file or directory${System.lineSeparator()}")
         val tested = calculate(listOf("src/test/resources/forest-gump.txt", "bwrg"))
         Assertions.assertEquals(expected, tested)
     }

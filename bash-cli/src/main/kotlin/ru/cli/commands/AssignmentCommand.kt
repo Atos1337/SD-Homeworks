@@ -20,7 +20,7 @@ class AssignmentCommand(override val args: List<String>) : Command {
      */
     override fun execute(input: InputStream, out: OutputStream, error: OutputStream, environment: Environment): ReturnCode {
         if (args.size != 2) {
-            error.write(("Wrong number of arguments").toByteArray())
+            error.write(("Wrong number of arguments${System.lineSeparator()}").toByteArray())
             return ReturnCode(StatusCode.ERROR, 1)
         }
 

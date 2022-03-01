@@ -31,7 +31,7 @@ class CatCommand(override val args: List<String>) : Command {
             if (file.exists()) {
                 out.write(file.readBytes())
             } else {
-                error.write(("$filename: No such file or directory").toByteArray())
+                error.write(("$filename: No such file or directory${System.lineSeparator()}").toByteArray())
                 return ReturnCode(StatusCode.ERROR, 1)
             }
         }

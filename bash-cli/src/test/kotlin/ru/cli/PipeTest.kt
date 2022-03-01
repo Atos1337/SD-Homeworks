@@ -31,7 +31,7 @@ class PipeTest {
         val output = ByteArrayOutputStream()
         pipe.execute(input, output, environment = Environment())
 
-        assertEquals("       0       1       4", String(output.toByteArray()))
+        assertEquals("       0       1       4${System.lineSeparator()}", String(output.toByteArray()))
     }
 
     @Test
@@ -67,6 +67,6 @@ class PipeTest {
         val error = ByteArrayOutputStream()
 
         assertEquals(StatusCode.ERROR, errorPipe.execute(out = output, error = error, environment = Environment()).status)
-        assertEquals("Wrong number of arguments", String(error.toByteArray()))
+        assertEquals("Wrong number of arguments${System.lineSeparator()}", String(error.toByteArray()))
     }
 }
