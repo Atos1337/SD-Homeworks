@@ -34,36 +34,41 @@ class GrepCommand(override val args: List<String>) : Command {
         environment: Environment
     ): ReturnCode {
         lateinit var returnCode: ReturnCode
-        object : CliktCommand() {
-            val isInsensitiveCase by option("-i").flag()
-            val isFullMatch by option("-w").flag()
-            val A: Int by option("-A").int().default(0)
-            val regexStr by argument()
-            val source by argument().file(mustExist = true, canBeDir = false).optional()
+        try {
+            object : CliktCommand() {
+                val isInsensitiveCase by option("-i").flag()
+                val isFullMatch by option("-w").flag()
+                val A: Int by option("-A").int().default(0)
+                val regexStr by argument()
+                val source by argument().file(mustExist = true, canBeDir = false).optional()
 
-            override fun run() {
-                var inp = input
-                if (source != null) {
-                    inp = source!!.inputStream()
-                }
-                val regex =
-                    if (isInsensitiveCase) {
-                        var tmp = regexStr
-                        if (isFullMatch) {
-                            tmp = "\\b$regexStr\\b"
-                        }
-                        tmp.toRegex(RegexOption.IGNORE_CASE)
-                    } else {
-                        var tmp = regexStr
-                        if (isFullMatch) {
-                            tmp = "(?<!\\p{L})$regexStr(?!\\p{L})"
-                        }
-                        tmp.toRegex()
+                override fun run() {
+                    var inp = input
+                    if (source != null) {
+                        inp = source!!.inputStream()
                     }
-                findLines(inp, out, regex, A)
-                returnCode = ReturnCode(StatusCode.SUCCESS, 0)
-            }
-        }.main(args)
+                    val regex =
+                        if (isInsensitiveCase) {
+                            var tmp = regexStr
+                            if (isFullMatch) {
+                                tmp = "\\b$regexStr\\b"
+                            }
+                            tmp.toRegex(RegexOption.IGNORE_CASE)
+                        } else {
+                            var tmp = regexStr
+                            if (isFullMatch) {
+                                tmp = "(?<!\\p{L})$regexStr(?!\\p{L})"
+                            }
+                            tmp.toRegex()
+                        }
+                    findLines(inp, out, regex, A)
+                    returnCode = ReturnCode(StatusCode.SUCCESS, 0)
+                }
+            }.parse(args)
+        } catch (e: Throwable) {
+            error.write("${e.message}${System.lineSeparator()}".toByteArray())
+            returnCode = ReturnCode(StatusCode.ERROR, -1)
+        }
 
         return returnCode
     }

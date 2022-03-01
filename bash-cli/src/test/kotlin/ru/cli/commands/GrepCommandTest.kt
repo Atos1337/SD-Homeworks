@@ -4,12 +4,14 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import ru.cli.Environment
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
 import kotlin.io.path.Path
 import kotlin.io.path.pathString
 import kotlin.io.path.readText
+import kotlin.test.assertEquals
 
 class GrepCommandTest {
     private fun calculate(args: List<String>, trueInputStream: InputStream? = null): String {
@@ -71,5 +73,17 @@ class GrepCommandTest {
         val expected = Path("src", "test", "resources", "grep-test-flag-a.out").readText()
         val tested = calculate(listOf("lol", "-A", "1"), ByteArrayInputStream(input.toByteArray()))
         Assertions.assertEquals(expected, tested)
+    }
+
+    @Test
+    fun flagAWithoutValue() {
+        val input = ByteArrayInputStream(byteArrayOf())
+        val output = ByteArrayOutputStream()
+        val error = ByteArrayOutputStream()
+        val env = Environment()
+
+        GrepCommand(listOf("lol", "-A")).execute(input, output, error, env)
+
+        assertEquals("option -A requires a value${System.lineSeparator()}", String(error.toByteArray()))
     }
 }
