@@ -35,7 +35,7 @@ class GrepCommand(override val args: List<String>) : Command {
     ): ReturnCode {
         lateinit var returnCode: ReturnCode
         object : CliktCommand() {
-            val isInsetiveCase by option("-i").flag()
+            val isInsensitiveCase by option("-i").flag()
             val isFullMatch by option("-w").flag()
             val A: Int by option("-A").int().default(0)
             val regexStr by argument()
@@ -47,7 +47,7 @@ class GrepCommand(override val args: List<String>) : Command {
                     inp = source!!.inputStream()
                 }
                 val regex =
-                    if (isInsetiveCase) {
+                    if (isInsensitiveCase) {
                         var tmp = regexStr
                         if (isFullMatch) {
                             tmp = "\\b$regexStr\\b"
