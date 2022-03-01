@@ -23,6 +23,8 @@ class CommandFactory {
      * @return the created command
      */
     fun getCommand(args: List<Token>): Command {
+        check(args.isNotEmpty()) { "Empty command" }
+
         val commandName = args[0].value
         if ('=' in commandName && args[0].quotingType == QuotingType.WITHOUT_QUOTE) {
             return AssignmentCommand(Parser.parseAssignmentCommand(args[0].value))

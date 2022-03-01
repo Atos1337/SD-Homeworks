@@ -1,5 +1,6 @@
 package ru.cli
 
+import ru.cli.commands.Command
 import ru.cli.commands.CommandFactory
 import ru.cli.commands.StatusCode
 import java.lang.Exception
@@ -22,7 +23,15 @@ fun main() {
             }
         }
 
-        val commands = Parser.splitIntoCommands(tokens).map { commandFactory.getCommand(it) }
+        lateinit var commands: List<Command>
+
+        try {
+            commands = Parser.splitIntoCommands(tokens).map { commandFactory.getCommand(it) }
+        } catch (e: IllegalStateException) {
+            System.err.println(e.message)
+            return@forEach
+        }
+
         val pipe = Pipe(commands)
 
         try {
