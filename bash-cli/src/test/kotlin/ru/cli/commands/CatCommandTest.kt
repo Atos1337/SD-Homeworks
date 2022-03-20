@@ -2,6 +2,7 @@ package ru.cli.commands
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import ru.cli.Environment
 import java.io.File
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
@@ -17,7 +18,7 @@ class CatCommandTest {
         val out = PipedOutputStream(commandOutput)
         val error = PipedOutputStream(commandError)
 
-        command.execute(input, out, error,)
+        command.execute(input, out, error, Environment())
         input.close()
         out.close()
         error.close()
@@ -46,14 +47,14 @@ class CatCommandTest {
 
     @Test
     fun oneFileErrorTest() {
-        val expected = listOf("", "bwrg: No such file or directory")
+        val expected = listOf("", "bwrg: No such file or directory${System.lineSeparator()}")
         val tested = calculate(listOf("bwrg"))
         Assertions.assertEquals(expected, tested)
     }
 
     @Test
     fun multipleFilesErrorTest() {
-        val expected = listOf(File("src/test/resources/forest-gump.txt").readText(Charsets.UTF_8), "bwrg: No such file or directory")
+        val expected = listOf(File("src/test/resources/forest-gump.txt").readText(Charsets.UTF_8), "bwrg: No such file or directory${System.lineSeparator()}")
         val tested = calculate(listOf("src/test/resources/forest-gump.txt", "bwrg"))
         Assertions.assertEquals(expected, tested)
     }
