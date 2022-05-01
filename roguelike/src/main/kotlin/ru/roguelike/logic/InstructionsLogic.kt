@@ -1,38 +1,13 @@
 package ru.roguelike.logic
 
-import ru.roguelike.view.InstructionsView
+import ru.roguelike.view.Drawable
 
+/**
+ * Class that stores logic about instructions
+ */
 class InstructionsLogic(
-    private val view: InstructionsView
+    private val view: Drawable
 ) : Logic {
-    /**
-     * process moving left, do nothing
-     */
-    override fun moveLeft() {
-        return
-    }
-
-    /**
-     * process moving right, do nothing
-     **/
-    override fun moveRight() {
-        return
-    }
-
-    /**
-     * process moving up, do nothing
-     **/
-    override fun moveUp() {
-        return
-    }
-
-    /**
-     * process moving down, do nothing
-     **/
-    override fun moveDown() {
-        return
-    }
-
     /**
      * draw help
      **/

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class CharacterTest {
     @Test
     fun testLeft() {
-        val c = Character(Coordinates(0, 0))
+        val c = Hero(Coordinates(0, 0))
 
         val old = c.coordinates.copy()
         val expected = Coordinates(old.x - 1, old.y)
@@ -18,7 +18,7 @@ class CharacterTest {
 
     @Test
     fun testRight() {
-        val c = Character(Coordinates(0, 0))
+        val c = Hero(Coordinates(0, 0))
 
         val old = c.coordinates.copy()
         val expected = Coordinates(old.x + 1, old.y)
@@ -30,7 +30,7 @@ class CharacterTest {
 
     @Test
     fun testUp() {
-        val c = Character(Coordinates(0, 0))
+        val c = Hero(Coordinates(0, 0))
 
         val old = c.coordinates.copy()
         val expected = Coordinates(old.x, old.y - 1)
@@ -42,7 +42,7 @@ class CharacterTest {
 
     @Test
     fun testDown() {
-        val c = Character(Coordinates(0, 0))
+        val c = Hero(Coordinates(0, 0))
 
         val old = c.coordinates.copy()
         val expected = Coordinates(old.x, old.y + 1)

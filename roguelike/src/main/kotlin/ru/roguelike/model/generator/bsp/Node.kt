@@ -2,7 +2,6 @@ package ru.roguelike.model.generator.bsp
 
 import ru.roguelike.model.Cell
 import ru.roguelike.model.CellType
-import ru.roguelike.model.Coordinates
 import ru.roguelike.model.Field
 import ru.roguelike.util.Constants
 import kotlin.random.Random
@@ -106,14 +105,7 @@ internal class Node(
                 tunnels += it
             }
         } else {
-            val roomWidth = Random.nextInt(Constants.ROOM_SIZE, width - 1)
-            val roomHeight = Random.nextInt(Constants.ROOM_SIZE, height - 1)
-            val roomCoordinates = Coordinates(
-                Random.nextInt(1, width - roomWidth),
-                Random.nextInt(1, height - roomHeight)
-            )
-
-            _room = Room(Coordinates(x, y) + roomCoordinates, roomWidth, roomHeight)
+            _room = Room.createRandomRoom(width, height, x, y)
         }
     }
 
@@ -127,6 +119,14 @@ internal class Node(
                     field[row][column] = Cell(CellType.WALKABLE)
                 }
             }
+        }
+
+        room?.enemies?.forEach {
+            field[it.coordinates.y][it.coordinates.x].enemy = it
+        }
+
+        room?.items?.forEach { (item, coord) ->
+            field[coord.y][coord.x].item = item
         }
 
         tunnels.forEach { tunnel ->

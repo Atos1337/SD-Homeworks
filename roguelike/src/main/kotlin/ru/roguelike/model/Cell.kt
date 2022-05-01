@@ -1,7 +1,7 @@
 package ru.roguelike.model
 
 /**
- * Specify wwhether character can walk on this cell
+ * Specify whether character can walk on this cell
  */
 enum class CellType {
     WALKABLE,
@@ -12,4 +12,8 @@ enum class CellType {
  * Class that stores information about field cell
  */
 @kotlinx.serialization.Serializable
-data class Cell(val cellType: CellType)
+data class Cell(
+    val cellType: CellType,
+    var item: Item? = null,
+    var enemy: Enemy? = null,
+)

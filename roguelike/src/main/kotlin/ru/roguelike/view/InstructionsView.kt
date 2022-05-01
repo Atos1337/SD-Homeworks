@@ -30,14 +30,21 @@ class InstructionsView(
             instructionPairs.add(instructionName + ": " + instructions.instructions[instructionName])
         }
         var row = 0
-        row = addStringToScreen(row, description) + 1
-        row = addStringToScreen(row, authors) + 1
+        for (str in description.split(',')) {
+            row = addStringToScreen(row, str)
+        }
+        row += 1
         for (str in instructionPairs) {
             row = addStringToScreen(row, str)
         }
+        row += 1
+        addStringToScreen(row, authors) + 1
         screen.refresh()
     }
 
+    /**
+     * Add string to the user screen
+     */
     private fun addStringToScreen(beginRow: Int, str: String): Int {
         var currentRow = beginRow
         var stringPos = 0

@@ -5,4 +5,5 @@ package ru.roguelike.view
  */
 interface Drawable {
     fun draw()
+    fun setError(message: String) {}
 }
