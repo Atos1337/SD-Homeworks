@@ -18,5 +18,5 @@ class StudentController @Autowired constructor(
     fun createSubmission(@RequestBody submission: Submission) = studentService.createSubmission(submission)
 
     @GetMapping("/homework")
-    fun getHomeworks() = studentService.getActualHomeworks()
+    fun getActualHomeworks() = studentService.getActualHomeworks()
 }

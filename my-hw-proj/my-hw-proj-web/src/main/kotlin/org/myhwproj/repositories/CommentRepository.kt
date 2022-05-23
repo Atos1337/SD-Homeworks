@@ -5,5 +5,5 @@ import org.myhwproj.models.Submission
 import org.springframework.data.repository.CrudRepository
 
 interface CommentRepository : CrudRepository<Comment, Long> {
-    fun findAllBySubmission(submission: Submission)
+    fun findAllBySubmission(submission: Submission): Iterable<Comment>
 }

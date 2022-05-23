@@ -1,6 +1,6 @@
 package org.myhwproj.models
 
-import java.sql.Timestamp
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -8,8 +8,8 @@ import javax.persistence.ManyToOne
 
 @Entity
 data class Submission(
-    var homeworkId: Long,
-    var submissionTime: Timestamp,
+    @ManyToOne var homework: Homework,
+    var submissionTime: Date,
     var solution: String,
     var mark: Int,
     @Id @GeneratedValue var id: Long? = null
