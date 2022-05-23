@@ -17,6 +17,7 @@ https://drive.google.com/file/d/1pn9_VG5arz1tu8XtGzXqUirRXHH4K-s7/view?usp=shari
 * `Queue` компонента организующая работу воркеров и общающаяся с `WebApplication` 
 
 ## Диаграмма веб-приложения 
+https://drive.google.com/file/d/1iytLZANGhCyIathRsXFcmxzjmHXxsTFC/view
 
 Она состоит и трех логических уровней: *контроллеры* -- ручки нашего сервера, *сервисы* -- бизнес-логика, *репозитории* -- удобная абстракция над сущностями из баз данных. 
 
@@ -50,4 +51,6 @@ https://drive.google.com/file/d/1pn9_VG5arz1tu8XtGzXqUirRXHH4K-s7/view?usp=shari
 Соответственно, чтобы добавить свой нужно лишь написать свою лямбду.
 В первом приближении там надо указать путь к python файлы
 
+## Схема БД
+https://drive.google.com/file/d/1aIW6UqpjUov9h-CCcmwQGasb3fo-EPq4/view?usp=sharing
 
