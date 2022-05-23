@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     kotlin("plugin.jpa") version "1.6.21"
@@ -36,6 +37,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("io.springfox:springfox-boot-starter:3.0.0")
+
+    implementation("compile 'com.rabbitmq:amqp-client:5.14.2")
 }
 
 tasks.withType<KotlinCompile> {
