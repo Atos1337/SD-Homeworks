@@ -9,8 +9,8 @@ import javax.persistence.ManyToOne
 @Entity
 data class Submission(
     @ManyToOne var homework: Homework,
-    var submissionTime: Date,
     var solution: String,
     var mark: Int? = null,
+    var submissionTime: Date = Date(System.currentTimeMillis()),
     @Id @GeneratedValue var id: Long? = null
 )
