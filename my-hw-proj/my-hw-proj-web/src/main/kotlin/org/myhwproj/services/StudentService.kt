@@ -55,7 +55,7 @@ class StudentService @Autowired constructor(
 
     private fun sendSubmission(submission: Submission) {
         channelCheck.queueDeclare(HW_TO_CHECK_QUEUE, false, false, false, null)
-        channelCheck.basicPublish("", HW_TO_CHECK_QUEUE, null, submission.solution.toByteArray())
+        channelCheck.basicPublish("", HW_TO_CHECK_QUEUE, null, mapper.writeValueAsBytes(submission))
     }
 
     private fun recvSubmissionResult() {

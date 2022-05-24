@@ -1,16 +1,42 @@
-# This is a sample Python script.
+import json
+import sys
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import pika
 
 
-# Press the green button in the gutter to run the script.
+def main():
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+
+    channel_recv = connection.channel()
+    channel_send = connection.channel()
+
+    channel_recv.queue_declare(queue="task_queue")
+    channel_send.queue_declare(queue="res_queue")
+
+    def callback(ch, method, properties, body):
+        print(" [x] Received %r" % str(body))
+        submission = json.loads(str(body))
+
+        submissionResult = {
+            "submissionId": submission["submissionId"],
+            "mark": 10,
+            "comment": "harosh"
+        }
+        channel_send.basic_publish(
+            exchange='',
+            routing_key='res_queue',
+            body=bytes(json.dumps(submissionResult))
+        )
+
+    channel_recv.basic_consume(queue='task_queue', on_message_callback=callback, auto_ack=True)
+
+    print(' [*] Waiting for submissions. To exit press CTRL+C')
+    channel_recv.start_consuming()
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('Interrupted')
+        sys.exit(0)
