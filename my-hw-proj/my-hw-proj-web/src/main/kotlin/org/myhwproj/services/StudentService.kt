@@ -1,6 +1,5 @@
 package org.myhwproj.services
 
-import java.sql.Timestamp
 import org.myhwproj.models.Comment
 import org.myhwproj.models.Submission
 import org.myhwproj.models.SubmissionResult
@@ -9,6 +8,7 @@ import org.myhwproj.repositories.HomeworkRepository
 import org.myhwproj.repositories.SubmissionRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.sql.Timestamp
 
 @Service
 class StudentService @Autowired constructor(

@@ -6,10 +6,10 @@ import com.rabbitmq.client.Channel
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.DeliverCallback
-import javax.annotation.PreDestroy
 import org.myhwproj.models.Submission
 import org.myhwproj.models.SubmissionResult
 import org.springframework.stereotype.Service
+import javax.annotation.PreDestroy
 
 @Service
 class WorkersService {
