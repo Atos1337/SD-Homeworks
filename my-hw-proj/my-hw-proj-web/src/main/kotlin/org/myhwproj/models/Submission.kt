@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne
 
 @Entity
 data class Submission(
-    @ManyToOne var homework: Homework,
+    var homeworkId: Long,
     var submissionTime: Timestamp,
     var solution: String,
     var mark: Int,
