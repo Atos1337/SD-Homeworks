@@ -14,18 +14,19 @@ def main():
     channel_send.queue_declare(queue="res_queue")
 
     def callback(ch, method, properties, body):
+        body = body.decode("utf-8")
         print(" [x] Received %r" % str(body))
         submission = json.loads(str(body))
 
         submissionResult = {
-            "submissionId": submission["submissionId"],
+            "submissionId": submission["id"],
             "mark": 10,
             "comment": "harosh"
         }
         channel_send.basic_publish(
             exchange='',
             routing_key='res_queue',
-            body=bytes(json.dumps(submissionResult))
+            body=bytes(json.dumps(submissionResult), "utf-8")
         )
 
     channel_recv.basic_consume(queue='task_queue', on_message_callback=callback, auto_ack=True)

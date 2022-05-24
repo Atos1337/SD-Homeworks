@@ -32,10 +32,13 @@ class StudentService @Autowired constructor(
     private val mapper = ObjectMapper().registerKotlinModule()
     private val deliverCallback = DeliverCallback { _, delivery ->
         val submissionResult = mapper.readValue(delivery.body.decodeToString(), SubmissionResult::class.java)
+        println("deliverCallback -> submissionResult -> $submissionResult")
         submissionRepository.findById(submissionResult.submissionId).ifPresent {
             it.mark = submissionResult.mark
             submissionRepository.save(it)
+            println("save1")
             commentRepository.save(Comment(it, submissionResult.comment))
+            println("save2")
         }
     }
 
