@@ -1,7 +1,8 @@
-import pika
-import json
 import configparser
+import json
 import sys
+
+import pika
 
 from check import default_check_func, clone_and_check
 
@@ -34,13 +35,17 @@ def run_worker_internal(check_func=default_check_func):
         print(" [x] Received %r" % str(body))
         submission = json.loads(str(body))
 
+        print("Start checking")
         mark, output = clone_and_check(submission["solution"], check_func)
 
         submissionResult = {
             "submissionId": submission["id"],
             "mark": mark,
-            "comment": output
+            "comment": output if output is not None else ""
         }
+
+        print("Finish checking")
+        print(submissionResult)
 
         channel_send.basic_publish(
             exchange='',

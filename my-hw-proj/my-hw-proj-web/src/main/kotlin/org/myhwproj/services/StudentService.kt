@@ -23,6 +23,7 @@ class StudentService @Autowired constructor(
     }
 
     fun recvSubmissionResult(submissionResult: SubmissionResult) {
+        println("start recvSubmissionResult")
         submissionRepository.findById(submissionResult.submissionId).ifPresent {
             it.mark = submissionResult.mark
             submissionRepository.save(it)
@@ -30,6 +31,7 @@ class StudentService @Autowired constructor(
             commentRepository.save(Comment(it, submissionResult.comment))
             println("save2")
         }
+        println("finish recvSubmissionResult")
     }
 
     fun createSubmission(submission: Submission): Submission {
