@@ -11,6 +11,6 @@ data class Submission(
     @ManyToOne var homework: Homework,
     var submissionTime: Date,
     var solution: String,
-    var mark: Int,
+    var mark: Int? = null,
     @Id @GeneratedValue var id: Long? = null
 )

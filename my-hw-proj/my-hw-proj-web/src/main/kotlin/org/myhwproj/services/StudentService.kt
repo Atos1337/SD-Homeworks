@@ -44,10 +44,12 @@ class StudentService @Autowired constructor(
         recvSubmissionResult()
     }
 
-    fun createSubmission(submission: Submission) {
-        submissionRepository.save(submission)
+    fun createSubmission(submission: Submission): Submission {
+        val submissionInDb = submissionRepository.save(submission)
         sendSubmission(submission)
+        return submissionInDb
     }
+
     fun getActualHomeworks() = Timestamp(System.currentTimeMillis()).let {
         homeworkRepository.findAllByDeadlineAfterAndPublicationDateBeforeOrderByDeadline(it, it)
     }
@@ -58,7 +60,7 @@ class StudentService @Autowired constructor(
         channelCheck.basicPublish("", HW_TO_CHECK_QUEUE, null, submission.solution.toByteArray())
     }
 
-    private final fun recvSubmissionResult() {
+    private fun recvSubmissionResult() {
         channelResult.queueDeclare(HW_RESULT_QUEUE, false, false, false, null)
         channelResult.basicConsume(HW_RESULT_QUEUE, true, deliverCallback) { _ -> }
     }
