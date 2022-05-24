@@ -40,24 +40,31 @@ class StudentService @Autowired constructor(
         }
     }
 
-    fun createSubmission(submission: Submission) = submissionRepository.save(submission)
+    init {
+        recvSubmissionResult()
+    }
+
+    fun createSubmission(submission: Submission) {
+        submissionRepository.save(submission)
+        sendSubmission(submission)
+    }
     fun getActualHomeworks() = Timestamp(System.currentTimeMillis()).let {
         homeworkRepository.findAllByDeadlineAfterAndPublicationDateBeforeOrderByDeadline(it, it)
     }
 
 
-    fun sendSubmission(submission: Submission) {
+    private fun sendSubmission(submission: Submission) {
         channelCheck.queueDeclare(HW_TO_CHECK_QUEUE, false, false, false, null)
         channelCheck.basicPublish("", HW_TO_CHECK_QUEUE, null, submission.solution.toByteArray())
     }
 
-    fun recvSubmissionResul() {
+    private final fun recvSubmissionResult() {
         channelResult.queueDeclare(HW_RESULT_QUEUE, false, false, false, null)
         channelResult.basicConsume(HW_RESULT_QUEUE, true, deliverCallback) { _ -> }
     }
 
     @PreDestroy
-    fun onDestroy() {
+    private fun onDestroy() {
         channelCheck.close()
         channelResult.close()
         connection.close()

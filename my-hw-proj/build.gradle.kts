@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     kotlin("plugin.jpa") version "1.6.21"
@@ -38,7 +37,9 @@ dependencies {
 
     implementation("io.springfox:springfox-boot-starter:3.0.0")
 
-    implementation("compile 'com.rabbitmq:amqp-client:5.14.2")
+//    implementation("compile 'com.rabbitmq:amqp-client:5.14.2")
+//    testImplementation("compile 'com.rabbitmq:amqp-client:5.14.2")
+    compileOnly("com.rabbitmq:amqp-client:5.14.2")
 }
 
 tasks.withType<KotlinCompile> {
@@ -67,11 +68,11 @@ fun printResults(desc: TestDescriptor, result: TestResult) {
     if (desc.parent == null) {
         val output = result.run {
             "Results: $resultType (" +
-                "$testCount tests, " +
-                "$successfulTestCount successes, " +
-                "$failedTestCount failures, " +
-                "$skippedTestCount skipped" +
-                ")"
+                    "$testCount tests, " +
+                    "$successfulTestCount successes, " +
+                    "$failedTestCount failures, " +
+                    "$skippedTestCount skipped" +
+                    ")"
         }
         val testResultLine = "|  $output  |"
         val repeatLength = testResultLine.length
