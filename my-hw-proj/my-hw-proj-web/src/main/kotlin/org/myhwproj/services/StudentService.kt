@@ -6,8 +6,6 @@ import com.rabbitmq.client.Channel
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.DeliverCallback
-import java.sql.Timestamp
-import javax.annotation.PreDestroy
 import org.myhwproj.models.Comment
 import org.myhwproj.models.Submission
 import org.myhwproj.models.SubmissionResult
@@ -16,7 +14,8 @@ import org.myhwproj.repositories.HomeworkRepository
 import org.myhwproj.repositories.SubmissionRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
+import java.sql.Timestamp
+import javax.annotation.PreDestroy
 
 @Service
 class StudentService @Autowired constructor(
@@ -53,7 +52,6 @@ class StudentService @Autowired constructor(
     fun getActualHomeworks() = Timestamp(System.currentTimeMillis()).let {
         homeworkRepository.findAllByDeadlineAfterAndPublicationDateBeforeOrderByDeadline(it, it)
     }
-
 
     private fun sendSubmission(submission: Submission) {
         channelCheck.queueDeclare(HW_TO_CHECK_QUEUE, false, false, false, null)

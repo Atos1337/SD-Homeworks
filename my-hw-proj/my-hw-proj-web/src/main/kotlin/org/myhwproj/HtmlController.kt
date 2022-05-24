@@ -13,5 +13,4 @@ class HtmlController {
         model["title"] = "Blog"
         return "blog"
     }
-
 }
