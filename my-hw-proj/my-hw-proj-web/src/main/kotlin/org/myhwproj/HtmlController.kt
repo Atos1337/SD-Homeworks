@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import java.sql.Timestamp
+import java.util.Date
 
 val tasks: List<Homework> = listOf(
     Homework("aaaa", Timestamp(0), "aaaa", Timestamp(0), 1),
@@ -17,9 +18,9 @@ val tasks: List<Homework> = listOf(
     Homework("dddd", Timestamp(0), "dddd", Timestamp(0), 4))
 
 val submissions: List<Submission> = listOf(
-    Submission(tasks[0], Timestamp(0), "aaaa", 5, 1),
-    Submission(tasks[1], Timestamp(0), "bbbb", 6, 2),
-    Submission(tasks[2], Timestamp(0), "cccc", 11, 3)
+    Submission(tasks[0], "aaaa", 5, Date(System.currentTimeMillis()),  1),
+    Submission(tasks[0], "aaaa", 5, Date(System.currentTimeMillis()),  1),
+    Submission(tasks[0], "aaaa", 5, Date(System.currentTimeMillis()),  1)
 )
 
 @Controller
@@ -68,7 +69,6 @@ class HtmlController {
         model["deadline"] = submissions[id].homework.deadline
         model["publicationDate"] = submissions[id].homework.publicationDate
         model["solution"] = submissions[id].solution
-        model["mark"] = submissions[id].mark
         model["time"] = submissions[id].submissionTime
         return "teacherSubmission"
     }
