@@ -31,10 +31,17 @@ class HtmlController(
     @RequestMapping("student/task/{id}")
     fun task(@PathVariable id: Int, model: Model): String? {
         val tasks = studentService.getActualHomeworks() as List<Homework>
-        model["title"] = tasks[id - 1].title
-        model["problem"] = tasks[id - 1].problem
-        model["deadline"] = tasks[id - 1].deadline
-        model["publicationDate"] = tasks[id - 1].publicationDate
+        var curId = 0
+        for (submission in tasks) {
+            if ((submission.id?.toInt() ?: 0) == id) {
+                break
+            }
+            curId ++
+        }
+        model["title"] = tasks[curId].title
+        model["problem"] = tasks[curId].problem
+        model["deadline"] = tasks[curId].deadline
+        model["publicationDate"] = tasks[curId].publicationDate
         return "task"
     }
 
@@ -46,9 +53,25 @@ class HtmlController(
     @RequestMapping("student/task/{id}/lastsubmission")
     fun lastsubmission(@PathVariable id: Int, model: Model): String? {
         val submissions = submissionService.getSubmissions() as List<Submission>
-        model["submissionTime"] = submissions[id - 1].submissionTime
-        model["solution"] = submissions[id - 1].solution
-        model["mark"] = submissions[id - 1].mark!!
+
+        val curId = 0
+        for (submission in submissions) {
+            if ((submission.id?.toInt() ?: 0) == id) {
+                break
+            }
+        }
+        if (submissions.isEmpty()) {
+            model["submissionTime"] = "None"
+            model["solution"] = "None"
+            model["mark"] = "None"
+        } else {
+            model["submissionTime"] = submissions[curId].submissionTime
+            model["solution"] = submissions[curId].solution
+            if (submissions[curId].mark != null)
+                model["mark"] = submissions[curId].mark!!
+            else
+                model["mark"] = 0
+        }
         return "lastsubmission"
     }
 
@@ -62,18 +85,27 @@ class HtmlController(
     @RequestMapping("teacher/submission/{id}")
     fun teacherSubmission(@PathVariable id: Int, model: Model): String? {
         val submissions: List<Submission> = submissionService.getSubmissions() as List<Submission>
-        model["title"] = submissions[id - 1].homework.title
-        model["problem"] = submissions[id - 1].homework.problem
-        model["deadline"] = submissions[id - 1].homework.deadline
-        model["publicationDate"] = submissions[id - 1].homework.publicationDate
-        model["solution"] = submissions[id - 1].solution
-        model["time"] = submissions[id - 1].submissionTime
+        var curId = 0
+        for (submission in submissions) {
+            if ((submission.id?.toInt() ?: 0) == id) {
+                break
+            }
+            curId ++
+        }
+        model["solution"] = submissions[curId].solution
+        model["time"] = submissions[curId].submissionTime
         return "teacherSubmission"
     }
 
     @RequestMapping("teacher/newtask")
     fun newTask(model: Model): String? {
         return "newTask"
+    }
+
+    @PostMapping("student/addnewsubmit")
+    fun addSubmit(@ModelAttribute submission: Submission): String? {
+        studentService.createSubmission(submission)
+        return "redirect:home"
     }
 
     @PostMapping("teacher/addnewtask")
