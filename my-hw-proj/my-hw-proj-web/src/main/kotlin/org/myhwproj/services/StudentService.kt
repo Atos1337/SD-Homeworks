@@ -41,6 +41,6 @@ class StudentService @Autowired constructor(
     }
 
     fun getActualHomeworks() = Timestamp(System.currentTimeMillis()).let {
-        homeworkRepository.findAllByDeadlineAfterAndPublicationDateBeforeOrderByDeadline(it, it)
+        homeworkRepository.findAllByDeadlineAfterAndPublicationDateBeforeOrderByDeadline(it.toString(), it.toString())
     }
 }
