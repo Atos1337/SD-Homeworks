@@ -14,4 +14,7 @@ python my-hw-proj-workers/main.py
 ```
 
 ### Spring Server
-Run Spring Applicatino inside `/my-hw-proj-web` directory using IDEA💁
+Run Spring Applicatino inside `/my-hw-proj-web` directory using IDEA💁 or run from `my-hw-proj-web` directory
+```shell
+./gradlew bootRun
+```
