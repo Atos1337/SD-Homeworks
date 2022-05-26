@@ -11,15 +11,12 @@ import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
 
 
-
-
-
 @Controller
-class HtmlController (
+class HtmlController(
     private val studentService: StudentService,
     private val submissionService: SubmissionService,
     private val teacherService: TeacherService,
-){
+) {
     @GetMapping("student/home")
     fun blog(model: Model): String {
         model["title"] = "Blog"
