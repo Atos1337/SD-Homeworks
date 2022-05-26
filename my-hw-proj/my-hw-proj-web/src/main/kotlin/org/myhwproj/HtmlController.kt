@@ -23,6 +23,7 @@ class HtmlController(
     @GetMapping("student/home")
     fun blog(model: Model): String {
         model["title"] = "Blog"
+//        rg
         model["tasks"] = studentService.getActualHomeworks() as List<Homework>
         return "blog"
     }
