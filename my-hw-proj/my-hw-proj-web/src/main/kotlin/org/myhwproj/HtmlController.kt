@@ -31,10 +31,10 @@ class HtmlController(
     @RequestMapping("student/task/{id}")
     fun task(@PathVariable id: Int, model: Model): String? {
         val tasks = studentService.getActualHomeworks() as List<Homework>
-        model["title"] = tasks[id].title
-        model["problem"] = tasks[id].problem
-        model["deadline"] = tasks[id].deadline
-        model["publicationDate"] = tasks[id].publicationDate
+        model["title"] = tasks[id - 1].title
+        model["problem"] = tasks[id - 1].problem
+        model["deadline"] = tasks[id - 1].deadline
+        model["publicationDate"] = tasks[id - 1].publicationDate
         return "task"
     }
 
@@ -45,9 +45,10 @@ class HtmlController(
 
     @RequestMapping("student/task/{id}/lastsubmission")
     fun lastsubmission(@PathVariable id: Int, model: Model): String? {
-        model["submissionTime"] = "ibjnvekc"
-        model["solution"] = "ibjnvekc"
-        model["mark"] = "ibjnvekc"
+        val submissions = submissionService.getSubmissions() as List<Submission>
+        model["submissionTime"] = submissions[id - 1].submissionTime
+        model["solution"] = submissions[id - 1].solution
+        model["mark"] = submissions[id - 1].mark!!
         return "lastsubmission"
     }
 
@@ -61,20 +62,17 @@ class HtmlController(
     @RequestMapping("teacher/submission/{id}")
     fun teacherSubmission(@PathVariable id: Int, model: Model): String? {
         val submissions: List<Submission> = submissionService.getSubmissions() as List<Submission>
-        model["title"] = submissions[id].homework.title
-        model["problem"] = submissions[id].homework.problem
-        model["deadline"] = submissions[id].homework.deadline
-        model["publicationDate"] = submissions[id].homework.publicationDate
-        model["solution"] = submissions[id].solution
-        model["time"] = submissions[id].submissionTime
+        model["title"] = submissions[id - 1].homework.title
+        model["problem"] = submissions[id - 1].homework.problem
+        model["deadline"] = submissions[id - 1].homework.deadline
+        model["publicationDate"] = submissions[id - 1].homework.publicationDate
+        model["solution"] = submissions[id - 1].solution
+        model["time"] = submissions[id - 1].submissionTime
         return "teacherSubmission"
     }
 
     @RequestMapping("teacher/newtask")
     fun newTask(model: Model): String? {
-        model["submissionTime"] = "ibjnvekc"
-        model["solution"] = "ibjnvekc"
-        model["mark"] = "ibjnvekc"
         return "newTask"
     }
 
