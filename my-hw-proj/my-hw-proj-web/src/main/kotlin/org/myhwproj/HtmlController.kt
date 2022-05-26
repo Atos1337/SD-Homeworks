@@ -10,7 +10,6 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
 
-
 @Controller
 class HtmlController(
     private val studentService: StudentService,
