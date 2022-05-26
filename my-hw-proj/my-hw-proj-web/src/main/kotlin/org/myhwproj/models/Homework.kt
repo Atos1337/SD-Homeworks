@@ -1,7 +1,5 @@
 package org.myhwproj.models
 
-import org.springframework.format.annotation.DateTimeFormat
-import java.util.Date
 import javax.persistence.*
 
 @Entity

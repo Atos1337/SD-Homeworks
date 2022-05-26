@@ -5,13 +5,10 @@ import org.myhwproj.models.Submission
 import org.myhwproj.services.StudentService
 import org.myhwproj.services.SubmissionService
 import org.myhwproj.services.TeacherService
-import org.myhwproj.services.WorkersService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.servlet.ModelAndView
-import java.text.SimpleDateFormat
 
 
 
@@ -22,7 +19,6 @@ class HtmlController (
     private val studentService: StudentService,
     private val submissionService: SubmissionService,
     private val teacherService: TeacherService,
-    private val workersService: WorkersService
 ){
     @GetMapping("student/home")
     fun blog(model: Model): String {
