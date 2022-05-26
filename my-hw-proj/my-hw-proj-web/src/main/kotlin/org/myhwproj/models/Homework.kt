@@ -1,15 +1,14 @@
 package org.myhwproj.models
 
+import org.springframework.format.annotation.DateTimeFormat
 import java.util.Date
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Homework(
     var title: String,
-    var publicationDate: Date,
+    var publicationDate: String,
     var problem: String,
-    var deadline: Date,
+    var deadline: String,
     @Id @GeneratedValue var id: Long? = null
 )
