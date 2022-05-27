@@ -18,3 +18,8 @@ Run Spring Applicatino inside `/my-hw-proj-web` directory using IDEA💁 or run 
 ```shell
 ./gradlew bootRun
 ```
+
+### usage
+```http://localhost:8080/student/home```  
+
+```http://localhost:8080/teacher/home```
