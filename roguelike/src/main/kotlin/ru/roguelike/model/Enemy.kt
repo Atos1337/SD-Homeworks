@@ -7,6 +7,11 @@ import ru.roguelike.logic.MapLogic
 import ru.roguelike.logic.PassiveStrategy
 import ru.roguelike.logic.SneakyStrategy
 import ru.roguelike.util.Constants
+import ru.roguelike.util.Constants.CLONABLE_ENEMIES
+import ru.roguelike.util.Constants.CYBORG_REGEN
+import ru.roguelike.util.Constants.DRAGON_REGEN
+import ru.roguelike.util.Constants.PANIC_HP_BOUND
+import ru.roguelike.util.Constants.SKELETON_REGEN
 import ru.roguelike.view.AGRESSIVE_CHAR
 import ru.roguelike.view.CONFUSED_CHAR
 import ru.roguelike.view.PASSIVE_CHAR
@@ -21,9 +26,11 @@ import kotlin.random.nextInt
 open class Enemy(
     override var _coordinates: Coordinates,
     override val maxHp: Int,
-    protected var strategy: CharacterStrategy,
+    protected var initStrategy: CharacterStrategy,
     val style: EnemyStyle
 ) : Character() {
+    var currentStrategy: CharacterStrategy = initStrategy
+
     /**
      * WantedMove
      */
@@ -31,8 +38,8 @@ open class Enemy(
         if (!mapLogic.isHeroVisible(coordinates)) {
             return coordinates
         }
-        strategy = strategy.getStrategy()
-        val newCoordinates = strategy.move(coordinates, heroCoordinates)
+        currentStrategy = currentStrategy.getStrategy()
+        val newCoordinates = currentStrategy.move(coordinates, heroCoordinates)
         if (mapLogic.checkCoordinates(newCoordinates)) {
             return newCoordinates
         }
@@ -44,6 +51,18 @@ open class Enemy(
      */
     fun move(coordinates: Coordinates) {
         _coordinates = coordinates
+        val p = hp * 1.0 / maxHp
+        currentStrategy = if (0 <= p && p < PANIC_HP_BOUND) {
+            SneakyStrategy()
+        } else {
+            initStrategy
+        }
+        val regenHP = when (style) {
+            EnemyStyle.DRAGON -> DRAGON_REGEN
+            EnemyStyle.CYBORG -> CYBORG_REGEN
+            EnemyStyle.SKELETON -> SKELETON_REGEN
+        }
+        hp = maxOf(maxHp, hp + regenHP)
     }
 
     /**
@@ -51,7 +70,7 @@ open class Enemy(
      */
     fun confuse() {
         if (Random.nextDouble() <= Constants.CONFUSE_PROBABILITY) {
-            strategy = ConfusedCharacterDecorator(strategy)
+            currentStrategy = ConfusedCharacterDecorator(currentStrategy)
         }
     }
 
@@ -59,16 +78,16 @@ open class Enemy(
      * String representation of the enemy
      */
     override fun toString(): String {
-        if (strategy.getStrategy() is AgressiveStrategy) {
+        if (currentStrategy.getStrategy() is AgressiveStrategy) {
             return AGRESSIVE_CHAR.toString()
         }
-        if (strategy.getStrategy() is SneakyStrategy) {
+        if (currentStrategy.getStrategy() is SneakyStrategy) {
             return SNEAKY_CHAR.toString()
         }
-        if (strategy.getStrategy() is PassiveStrategy) {
+        if (currentStrategy.getStrategy() is PassiveStrategy) {
             return PASSIVE_CHAR.toString()
         }
-        if (strategy.getStrategy() is ConfusedCharacterDecorator) {
+        if (currentStrategy.getStrategy() is ConfusedCharacterDecorator) {
             return CONFUSED_CHAR.toString()
         }
         throw Exception("")
@@ -79,7 +98,7 @@ open class Enemy(
 
         fun createRandomEnemy(x: Int, y: Int, style: EnemyStyle): Enemy {
             val hp = Random.nextInt(1..Constants.MAX_ENEMY_HP)
-            val enemy = if (style == EnemyStyle.SKELETON) {
+            val enemy = if (style in CLONABLE_ENEMIES) {
                 CloneableEnemy(Coordinates(x, y), hp, strategies.random(), style)
             } else {
                 Enemy(Coordinates(x, y), hp, strategies.random(), style)

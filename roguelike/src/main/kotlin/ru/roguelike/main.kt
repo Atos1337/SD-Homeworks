@@ -3,8 +3,8 @@ package ru.roguelike
 import com.googlecode.lanterna.TerminalSize
 import com.googlecode.lanterna.screen.TerminalScreen
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory
+import ru.roguelike.command.CommandFactory
 import ru.roguelike.logic.GameState
-import ru.roguelike.logic.InputProcessor
 import ru.roguelike.logic.InstructionsLogic
 import ru.roguelike.logic.InventoryLogic
 import ru.roguelike.logic.LogicFacade
@@ -43,10 +43,11 @@ fun main() {
     terminal.use {
         screen.use {
             mainLoop@ while (true) {
-                val inputProcessor = getInputProcessor(screen)
+                val logicFacade = getLogicFacade(screen)
                 while (true) {
                     val keyStroke = it.readInput()
-                    when (inputProcessor.process(keyStroke)) {
+                    val command = CommandFactory.getCommand(keyStroke, logicFacade)
+                    when (command.execute()) {
                         GameState.GOOD -> continue
                         GameState.DEAD_HERO -> break
                         GameState.TERMINATED -> break@mainLoop
@@ -57,7 +58,7 @@ fun main() {
     }
 }
 
-private fun getInputProcessor(screen: TerminalScreen): InputProcessor {
+private fun getLogicFacade(screen: TerminalScreen): LogicFacade {
     val field = FieldBuilder(RandomEnemyFactory())
         .withProperties(Properties().also { it.load(FileInputStream("src/main/resources/map.properties")) })
         .build()
@@ -77,5 +78,5 @@ private fun getInputProcessor(screen: TerminalScreen): InputProcessor {
     val logicFacade = LogicFacade(map = mapLogic, instructions = instructionsLogic, inventoryLogic)
 
     mapView.draw()
-    return InputProcessor(logicFacade)
+    return logicFacade
 }

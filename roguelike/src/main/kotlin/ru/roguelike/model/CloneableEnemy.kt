@@ -12,7 +12,7 @@ class CloneableEnemy(
     style: EnemyStyle
 ) : Enemy(_coordinates, maxHp, strategy, style) {
     override fun clone(coordinates: Coordinates): Enemy {
-        val enemy = CloneableEnemy(coordinates, maxHp, strategy, style)
+        val enemy = CloneableEnemy(coordinates, maxHp, initStrategy, style)
         enemy.hp = hp
         enemy.damage = damage
 

@@ -8,7 +8,7 @@ class InputProcessor(
 ) {
 
     /**
-     *  process user actions
+     *  H user actions
      */
     fun process(keyStroke: KeyStroke): GameState {
         if (logicFacade.isHeroDead()) {

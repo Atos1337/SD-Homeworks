@@ -91,7 +91,12 @@
 
 
 ### Input
-- Класс InputProcessor считывает ввод пользователя и в зависимости от кнопки, нажатой пользователем, вызывает соответствующий метод LogicFacade.
+https://drive.google.com/file/d/1wt8P4O_gBL7xdB4iXXCHCbRvJtD7d0rX/view?usp=sharing
+
+- Считываем ввод пользователя
+- С помощью CommandFactory создаем команду, соответствующую кнопке, нажатой пользователем 
+- У этой команды вызываем метод `execute()`, который будет выполнять сценарий рассматриваемой кнопки 
+
 ### Logic
 https://drive.google.com/file/d/1bV6EcTbEd8aW0aVcDHciq7vDdPQQ3i6G/view?usp=sharing
 
@@ -103,7 +108,7 @@ https://drive.google.com/file/d/1bV6EcTbEd8aW0aVcDHciq7vDdPQQ3i6G/view?usp=shari
   - знает видна ли одна клетна из другой
 - **Класс`InventoryLogic`** наследует интерфейс `Logic` и отвечает за логику для инвентаря и хранит в себе `InventoryModel` и `Character`.
 - **Класс`InstructionLogic`** наследует интрефейс `Logic` и отвечает за логику для инструкций и хранит в себе `InstructionModel`.
-- **Класс `CharacterStrategy`** с единственным методом `move(Coordinates) -> Coordinates` описывает логику передвижения врага. На данный момент выделяем следующие виды:
+- **Класс `CharacterStrategy`** с единственным методом `move(Coordinates) -> Coordinates` описывает текущее **состояние** врага. Изменения состояний пользователь описывает в методе `Enemy::wantedMove()` На данный момент выделяем следующие виды:
   - PassiveStrategy
   - AgressiveStrategy
   - SneakyStrategy

@@ -145,7 +145,7 @@ class MapLogic(
                 if (hero.isDead()) {
                     view.setError("YOU DIED!!! NEXT ACTION WILL RESTART THE GAME")
                 }
-            } else if (oldCoordinates != newCoordinates) {
+            } else {
                 enemy.move(newCoordinates)
                 mapModel.field[oldCoordinates.y][oldCoordinates.x].enemy = null
                 mapModel.field[newCoordinates.y][newCoordinates.x].enemy = enemy
@@ -157,7 +157,11 @@ class MapLogic(
                     Coordinates(newCoordinates.x + 1, newCoordinates.y),
                 )
                 val randomPossible = possible.random()
-                if (checkCoordinates(randomPossible) && Random.nextDouble() < Constants.CLONE_PROBABILITY) {
+                if (
+                    checkCoordinates(randomPossible) &&
+                    isHeroVisible(oldCoordinates) &&
+                    Random.nextDouble() < Constants.CLONE_PROBABILITY
+                ) {
                     mapModel.field[randomPossible.y][randomPossible.x].enemy = enemy.clone(randomPossible)
                 }
             }
