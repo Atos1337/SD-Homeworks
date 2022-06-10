@@ -27,8 +27,11 @@ class InventoryLogic(
                     view.setError("You already equip too much items")
                     return
                 }
-                character.use(item)
-                inventoryModel.useCurrentItem()
+                if (character.use(item)) {
+                    inventoryModel.useCurrentItem()
+                } else {
+                    view.setError("You cant pick it !")
+                }
             } else {
                 view.setError("Current item already equipped")
             }

@@ -19,8 +19,8 @@ object Constants {
     var ROOM_ENEMY_COUNT = 2
     var ROOM_ITEMS_COUNT = 3
 
-    var MAX_HP = 70
-    var MAX_DAMAGE = 30
+    var MAX_ENEMY_HP = 70
+    var MAX_ENEMY_DAMAGE = 30
     var MAX_ARMOR = 50
 
     var HP_INCREASE_FOR_LEVEL = 10
@@ -28,4 +28,10 @@ object Constants {
     var EXP_FOR_LEVEL_UP = 500
 
     var CONFUSE_PROBABILITY = 0.1
+
+    var CLONE_PROBABILITY = 0.3
+
+    var SKELETON_PROBABILITY = 0.14
+    var DRAGON_PROBABILITY = 0.43
+    var CYBORG_PROBABILITY = 0.43
 }

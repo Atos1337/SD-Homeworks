@@ -13,15 +13,18 @@ import ru.roguelike.model.Hero
 import ru.roguelike.model.InventoryModel
 import ru.roguelike.model.Item
 import ru.roguelike.model.MapModel
+import ru.roguelike.model.RandomEnemyFactory
 import ru.roguelike.model.Shield
 import ru.roguelike.model.Sword
+import ru.roguelike.model.generator.FieldBuilder
 import ru.roguelike.util.Constants
 
 class ViewTest {
     @Disabled("Can't create terminal in CI")
     @Test
     fun testMapView() {
-        val mapModel = MapModel()
+        val field = FieldBuilder(RandomEnemyFactory()).build()
+        val mapModel = MapModel(field)
         val defaultTerminalFactory = DefaultTerminalFactory().also {
             it.setInitialTerminalSize(
                 TerminalSize(Constants.FIELD_WIDTH, Constants.FIELD_HEIGHT + Constants.CHARACTER_VIEW_HEIGHT)
@@ -55,7 +58,9 @@ class ViewTest {
                                         is Shield -> TextCharacter.fromCharacter(SHIELD_CHAR)[0].characterString[0]
                                         is Sword -> TextCharacter.fromCharacter(SWORD_CHAR)[0].characterString[0]
                                         is Apple -> TextCharacter.fromCharacter(APPLE_CHAR)[0].characterString[0]
-                                        else -> { TextCharacter.fromCharacter(NON_WALKABLE_CHAR)[0].characterString[0] }
+                                        else -> {
+                                            TextCharacter.fromCharacter(NON_WALKABLE_CHAR)[0].characterString[0]
+                                        }
                                     }
                                 )
                             } else if (mapModel.field[row - 1][column].enemy != null) {
@@ -79,6 +84,7 @@ class ViewTest {
     @Disabled("Can't create terminal in CI")
     @Test
     fun testInventoryView() {
+        val field = FieldBuilder(RandomEnemyFactory()).build()
         val defaultTerminalFactory = DefaultTerminalFactory().also {
             it.setInitialTerminalSize(
                 TerminalSize(Constants.FIELD_WIDTH, Constants.FIELD_HEIGHT + Constants.CHARACTER_VIEW_HEIGHT)
@@ -89,7 +95,7 @@ class ViewTest {
             it.startScreen(); it.cursorPosition = null
         }
         val inventoryModel = InventoryModel(listOf(Shield(2), Sword(3), Apple(4)) as MutableList<Item>)
-        val mapModel = MapModel()
+        val mapModel = MapModel(field)
         val coordinates = mapModel.getRandomWalkableCoordinates()
         val character = Hero(coordinates)
         val characterView = CharacterView(character, screen)

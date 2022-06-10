@@ -1,9 +1,11 @@
 package ru.roguelike.view
 
 import com.googlecode.lanterna.TextCharacter
+import com.googlecode.lanterna.TextColor
 import com.googlecode.lanterna.screen.Screen
 import ru.roguelike.model.Apple
 import ru.roguelike.model.CellType
+import ru.roguelike.model.EnemyStyle
 import ru.roguelike.model.MapModel
 import ru.roguelike.model.Shield
 import ru.roguelike.model.Sword
@@ -42,7 +44,13 @@ class MapView(
                 } else if (cell.enemy != null) {
                     screen.setCharacter(
                         column, row,
-                        TextCharacter.fromCharacter(cell.enemy.toString()[0])[0]
+                        TextCharacter.fromCharacter(cell.enemy.toString()[0])[0].withBackgroundColor(
+                            when (cell.enemy!!.style) {
+                                EnemyStyle.CYBORG -> TextColor.RGB(80, 200, 0)
+                                EnemyStyle.DRAGON -> TextColor.RGB(0, 80, 200)
+                                EnemyStyle.SKELETON -> TextColor.RGB(200, 0, 80)
+                            }
+                        )
                     )
                 } else {
                     screen.setCharacter(

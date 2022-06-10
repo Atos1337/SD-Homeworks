@@ -11,9 +11,9 @@ abstract class Character {
     protected abstract var _coordinates: Coordinates
     val coordinates get() = _coordinates
 
-    var damage: Int = Constants.MAX_DAMAGE
+    var damage: Int = Constants.MAX_ENEMY_DAMAGE
         protected set
-    var hp: Int = Constants.MAX_HP
+    var hp: Int = Constants.MAX_ENEMY_HP
         protected set
     abstract val maxHp: Int
     var armor: Int = 0

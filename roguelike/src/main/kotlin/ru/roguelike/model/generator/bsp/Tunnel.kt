@@ -39,7 +39,7 @@ internal data class Tunnel(
                     leftCoordinates.swapX(rightCoordinates)
                 }
 
-                tunnels.add(Tunnel(DirectionType.HORIZONTAL, leftCoordinates, abs(width)))
+                tunnels.add(Tunnel(DirectionType.HORIZONTAL, leftCoordinates, abs(width) + 1))
                 return tunnels
             }
 
@@ -51,16 +51,16 @@ internal data class Tunnel(
                          * _ l
                          */
                         true -> {
-                            tunnels.add(Tunnel(DirectionType.VERTICAL, leftCoordinates, height))
-                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, rightCoordinates, -width))
+                            tunnels.add(Tunnel(DirectionType.VERTICAL, leftCoordinates, height + 1))
+                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, rightCoordinates, -width + 1))
                         }
                         /**
                          * r _
                          * * l
                          */
                         false -> {
-                            tunnels.add(Tunnel(DirectionType.VERTICAL, Coordinates(rightCoordinates.x, leftCoordinates.y), height))
-                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, Coordinates(rightCoordinates.x, leftCoordinates.y), -width))
+                            tunnels.add(Tunnel(DirectionType.VERTICAL, Coordinates(rightCoordinates.x, leftCoordinates.y), height + 1))
+                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, Coordinates(rightCoordinates.x, leftCoordinates.y), -width + 1))
                         }
                     }
                 } else {
@@ -70,16 +70,16 @@ internal data class Tunnel(
                          * r _
                          */
                         true -> {
-                            tunnels.add(Tunnel(DirectionType.VERTICAL, rightCoordinates, -height))
-                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, Coordinates(rightCoordinates.x, leftCoordinates.y), -width))
+                            tunnels.add(Tunnel(DirectionType.VERTICAL, rightCoordinates, -height + 1))
+                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, Coordinates(rightCoordinates.x, leftCoordinates.y), -width + 1))
                         }
                         /**
                          * _ l
                          * r *
                          */
                         false -> {
-                            tunnels.add(Tunnel(DirectionType.VERTICAL, Coordinates(leftCoordinates.x, rightCoordinates.y), -height))
-                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, rightCoordinates, -width))
+                            tunnels.add(Tunnel(DirectionType.VERTICAL, Coordinates(leftCoordinates.x, rightCoordinates.y), -height + 1))
+                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, rightCoordinates, -width + 1))
                         }
                     }
                 }
@@ -91,16 +91,16 @@ internal data class Tunnel(
                              * _ r
                              * l *
                              */
-                            tunnels.add(Tunnel(DirectionType.VERTICAL, Coordinates(rightCoordinates.x, leftCoordinates.y), height))
-                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, leftCoordinates, width))
+                            tunnels.add(Tunnel(DirectionType.VERTICAL, Coordinates(rightCoordinates.x, leftCoordinates.y), height + 1))
+                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, leftCoordinates, width + 1))
                         }
                         false -> {
                             /**
                              * * r
                              * l _
                              */
-                            tunnels.add(Tunnel(DirectionType.VERTICAL, leftCoordinates, height))
-                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, Coordinates(leftCoordinates.x, rightCoordinates.y), width))
+                            tunnels.add(Tunnel(DirectionType.VERTICAL, leftCoordinates, height + 1))
+                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, Coordinates(leftCoordinates.x, rightCoordinates.y), width + 1))
                         }
                     }
                 } else {
@@ -110,16 +110,16 @@ internal data class Tunnel(
                              * l _
                              * * r
                              */
-                            tunnels.add(Tunnel(DirectionType.VERTICAL, Coordinates(leftCoordinates.x, rightCoordinates.y), -height))
-                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, Coordinates(leftCoordinates.x, rightCoordinates.y), width))
+                            tunnels.add(Tunnel(DirectionType.VERTICAL, Coordinates(leftCoordinates.x, rightCoordinates.y), -height + 1))
+                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, Coordinates(leftCoordinates.x, rightCoordinates.y), width + 1))
                         }
                         false -> {
                             /**
                              * l *
                              * _ r
                              */
-                            tunnels.add(Tunnel(DirectionType.VERTICAL, rightCoordinates, -height))
-                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, leftCoordinates, width))
+                            tunnels.add(Tunnel(DirectionType.VERTICAL, rightCoordinates, -height + 1))
+                            tunnels.add(Tunnel(DirectionType.HORIZONTAL, leftCoordinates, width + 1))
                         }
                     }
                 }
@@ -128,7 +128,7 @@ internal data class Tunnel(
                     leftCoordinates.swapY(rightCoordinates)
                 }
 
-                tunnels.add(Tunnel(DirectionType.VERTICAL, leftCoordinates, abs(height)))
+                tunnels.add(Tunnel(DirectionType.VERTICAL, leftCoordinates, abs(height) + 1))
             }
 
             return tunnels

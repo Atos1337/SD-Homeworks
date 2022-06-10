@@ -2,6 +2,7 @@ package ru.roguelike.model.generator.bsp
 
 import ru.roguelike.model.Cell
 import ru.roguelike.model.CellType
+import ru.roguelike.model.EnemyFactory
 import ru.roguelike.model.Field
 import ru.roguelike.util.Constants
 import kotlin.random.Random
@@ -92,10 +93,10 @@ internal class Node(
     /**
      * Create rooms in leaves of BSPTree
      */
-    fun createRooms() {
+    fun createRooms(enemyFactory: EnemyFactory) {
         if (leftChild != null || rightChild != null) {
-            leftChild?.createRooms()
-            rightChild?.createRooms()
+            leftChild?.createRooms(enemyFactory)
+            rightChild?.createRooms(enemyFactory)
 
             leftChild?.room?.let { l ->
                 rightChild?.room?.let { r ->
@@ -105,7 +106,7 @@ internal class Node(
                 tunnels += it
             }
         } else {
-            _room = Room.createRandomRoom(width, height, x, y)
+            _room = Room.createRandomRoom(width, height, x, y, enemyFactory)
         }
     }
 

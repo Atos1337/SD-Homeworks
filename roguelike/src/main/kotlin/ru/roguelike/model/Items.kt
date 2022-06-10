@@ -13,8 +13,8 @@ object Items {
      */
     fun createRandomItem(): Item = when (Random.nextInt(3)) {
         0 -> Shield(Random.nextInt(1..Constants.MAX_ARMOR))
-        1 -> Sword(Random.nextInt(1..Constants.MAX_DAMAGE))
-        2 -> Apple(Random.nextInt(1..Constants.MAX_HP))
+        1 -> Sword(Random.nextInt(1..Constants.MAX_ENEMY_DAMAGE))
+        2 -> Apple(Random.nextInt(1..Constants.MAX_ENEMY_HP))
         else -> error("Unreachable")
     }
 }

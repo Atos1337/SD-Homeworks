@@ -1,14 +1,12 @@
 package ru.roguelike.model
 
-import ru.roguelike.model.generator.bsp.BSPFieldGenerator
-
 typealias Field = MutableList<MutableList<Cell>>
 
 /**
  * Class that store information about map
  */
 class MapModel(
-    val field: Field = BSPFieldGenerator.generate()
+    val field: Field
 ) {
     fun getX() = field[0].size
     fun getY() = field.size

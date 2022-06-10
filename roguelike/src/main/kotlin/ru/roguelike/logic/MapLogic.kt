@@ -10,6 +10,7 @@ import ru.roguelike.util.Constants
 import ru.roguelike.view.Drawable
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.random.Random
 
 /**
  * Class that stores logic about map
@@ -148,6 +149,17 @@ class MapLogic(
                 enemy.move(newCoordinates)
                 mapModel.field[oldCoordinates.y][oldCoordinates.x].enemy = null
                 mapModel.field[newCoordinates.y][newCoordinates.x].enemy = enemy
+
+                val possible = arrayOf(
+                    Coordinates(newCoordinates.x - 1, newCoordinates.y),
+                    Coordinates(newCoordinates.x, newCoordinates.y - 1),
+                    Coordinates(newCoordinates.x, newCoordinates.y + 1),
+                    Coordinates(newCoordinates.x + 1, newCoordinates.y),
+                )
+                val randomPossible = possible.random()
+                if (checkCoordinates(randomPossible) && Random.nextDouble() < Constants.CLONE_PROBABILITY) {
+                    mapModel.field[randomPossible.y][randomPossible.x].enemy = enemy.clone(randomPossible)
+                }
             }
         }
     }

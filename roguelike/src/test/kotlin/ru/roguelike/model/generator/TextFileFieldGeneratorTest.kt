@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import ru.roguelike.model.Cell
 import ru.roguelike.model.CellType
+import ru.roguelike.model.RandomEnemyFactory
 import java.nio.file.Paths
 
 class TextFileFieldGeneratorTest {
@@ -16,6 +17,6 @@ class TextFileFieldGeneratorTest {
         )
         val path = Paths.get("src", "test", "resources", "field.txt")
 
-        assertEquals(expected, TextFileFieldGenerator(path.toFile().absolutePath).generate())
+        assertEquals(expected, FieldBuilder(RandomEnemyFactory()).fromFile(path.toFile().absolutePath).withFormat(FormatType.PLAIN).build())
     }
 }
